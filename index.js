@@ -30,10 +30,17 @@ async function run() {
     await client.connect();
     const db = client.db("OnlineLearningPlatform");
     const coursesCollection = db.collection("courses");
+    const instructorsCollection = db.collection("instructor");
 
     // Users Apis
     app.get("/courses", async (req, res) => {
       const cursor = coursesCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.get("/instructors", async (req, res) => {
+      const cursor = instructorsCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
