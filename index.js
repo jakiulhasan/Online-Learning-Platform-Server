@@ -53,6 +53,19 @@ async function run() {
       res.send(result);
     });
 
+    // update api
+    app.patch("/courses/:id", async (req, res) => {
+      const id = req.params.id;
+      const updated = req.body;
+      const query = { _id: new ObjectId(id) };
+      const update = {
+        $set: updated,
+      };
+
+      const result = await myCourses.updateOne(query, update);
+      res.send(result);
+    });
+
     // specific course api
     app.get("/courses/:id", async (req, res) => {
       const id = req.params.id;
