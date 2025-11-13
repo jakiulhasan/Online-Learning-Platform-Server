@@ -30,6 +30,7 @@ async function run() {
     await client.connect();
     const db = client.db("OnlineLearningPlatform");
     const coursesCollection = db.collection("courses");
+    const myCourses = db.collection("my_courses");
     const instructorsCollection = db.collection("instructor");
 
     // Users Apis
@@ -39,7 +40,20 @@ async function run() {
       res.send(result);
     });
 
-    // specific course api implemented
+    app.post("/add-course", async (req, res) => {
+      console.log("headers in the post ", req.headers);
+      const newProduct = req.body;
+      const result = await myCourses.insertOne(newProduct);
+      res.send(result);
+    });
+
+    app.get("/my-courses", async (req, res) => {
+      const email = req.query.email;
+      const result = await myCourses.find({ email }).toArray();
+      res.send(result);
+    });
+
+    // specific course api
     app.get("/courses/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
