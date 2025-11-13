@@ -66,6 +66,12 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/my-courses/:id", async (req, res) => {
+      const id = req.params.id;
+      const result = await myCourses.findOne({ _id: new ObjectId(id) });
+      res.send(result);
+    });
+
     // update api
     app.patch("/courses/:id", async (req, res) => {
       const id = req.params.id;
