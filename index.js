@@ -39,6 +39,14 @@ async function run() {
       res.send(result);
     });
 
+    // specific course api implemented
+    app.get("/courses/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await coursesCollection.findOne(query);
+      res.send(result);
+    });
+
     app.get("/instructors", async (req, res) => {
       const cursor = instructorsCollection.find();
       const result = await cursor.toArray();
