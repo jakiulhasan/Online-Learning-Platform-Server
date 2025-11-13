@@ -31,6 +31,7 @@ async function run() {
     const db = client.db("OnlineLearningPlatform");
     const coursesCollection = db.collection("courses");
     const myCourses = db.collection("my_courses");
+    const enrolledCourses = db.collection("enrolled_courses");
     const instructorsCollection = db.collection("instructor");
 
     // Users Apis
@@ -44,6 +45,12 @@ async function run() {
       console.log("headers in the post ", req.headers);
       const newProduct = req.body;
       const result = await myCourses.insertOne(newProduct);
+      res.send(result);
+    });
+
+    app.post("/add-enrollment-course", async (req, res) => {
+      const newEnroll = req.body;
+      const result = await enrolledCourses.insertOne(newEnroll);
       res.send(result);
     });
 
