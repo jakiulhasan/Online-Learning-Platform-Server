@@ -54,6 +54,12 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/my-enrollment", async (req, res) => {
+      const email = req.query.email;
+      const result = await enrolledCourses.find({ email }).toArray();
+      res.send(result);
+    });
+
     app.get("/my-courses", async (req, res) => {
       const email = req.query.email;
       const result = await myCourses.find({ email }).toArray();
